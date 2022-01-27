@@ -5,13 +5,13 @@ const getBirds = asyncHandler(async (req, res) => {
   res.status(200).json(model.getBirds());
 });
 
-const postBird = asyncHandler(async (req, res) => {
-  if (req.body.id && req.body.name) {
+const patchBird = asyncHandler(async (req, res) => {
+  if (req.params.id && req.body.name) {
     const birds = model.getBirds();
-    if (birds.map((el) => el.id).includes(Number(req.body.id))) {
-      res.status(200).json(model.postBird(req.body.id, req.body.name));
+    if (birds.map((el) => el.id).includes(Number(req.params.id))) {
+      res.status(200).json(model.patchBird(req.params.id, req.body.name));
     } else res.status(500).send('Not found.');
   } else res.status(404).send('Invalid values.');
 });
 
-module.exports = { getBirds, postBird };
+module.exports = { getBirds, patchBird };
